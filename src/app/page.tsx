@@ -1,7 +1,7 @@
 import initialData from "../../data.json";
 
 function QuizItem({ item }: { item: { id: string; name: string } }) {
-	return <div>{item.name}</div>;
+	return <div className="bg-gray-500 text-9xl">{item.name}</div>;
 }
 
 export default function Home() {
@@ -11,10 +11,12 @@ export default function Home() {
 				<h1>Home</h1>
 			</header>
 
-			<main>
-				{initialData.map((item) => {
-					return <QuizItem key={item.id} item={item} />;
-				})}
+			<main className="bg-gray-600">
+				<div className="bg-gray-500">
+					{initialData.map((item) => {
+						return <QuizItem key={item.id} item={item} />;
+					})}
+				</div>
 			</main>
 
 			<footer>
