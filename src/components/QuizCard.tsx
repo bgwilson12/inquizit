@@ -5,7 +5,7 @@ export default function QuizCard({
 	item,
 	toggleModalOpen,
 }: {
-	item: { id: string; name: string };
+	item: { id: string; quizName: string };
 	toggleModalOpen: () => void;
 }) {
 	return (
@@ -13,7 +13,7 @@ export default function QuizCard({
 			className="h-56 w-56 p-2 m-2 shadow-lg rounded-xl bg-slate-500 cursor-pointer"
 			onClick={toggleModalOpen}
 		>
-			<div>{item.name}</div>
+			<div>{item.quizName}</div>
 			<div className="flex justify-between ">
 				<p>Percent Correct</p>
 				<p>{90}%</p>

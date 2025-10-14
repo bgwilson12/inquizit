@@ -4,7 +4,7 @@ import { useState } from "react";
 import QuizCard from "./QuizCard";
 import Modal from "./Modal";
 
-type QuizData = { id: string; name: string }[];
+type QuizData = { id: string; quizName: string }[];
 
 export default function QuizList({ data }: { data: QuizData }) {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

@@ -1,6 +1,7 @@
 import QuizInput from "@/components/QuizInput";
-import initialData from "../../data.json";
 import QuizList from "@/components/QuizList";
+import { getQuizzes } from "./actions/getQuizzes";
+const initialData = await getQuizzes();
 
 export type QuizData = { id: string; name: string }[];
 
