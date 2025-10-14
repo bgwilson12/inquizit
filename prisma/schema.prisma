@@ -5,7 +5,11 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+	provider = "prisma-client-js"
+}
+generator zod {
+  provider = "zod-prisma-types"
+	output 	 = "../src/zod"
 }
 
 datasource db {
@@ -14,8 +18,20 @@ datasource db {
 }
 
 model Quiz {
-  id        String   @id @default(uuid())
-  quizName  String
-  questions Json
-  @@map("quiz")
+    id        String     @id @default(uuid())
+    quizName  String
+    questions Question[]
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+		@@map("quiz")
+}
+
+model Question {
+	id						String		@id @default(uuid())
+	quizId				String
+	text					String
+	answers				String[]
+	correctAnswer String
+	quiz					Quiz		@relation(fields: [quizId], references: [id])
+	@@map("question")
 }

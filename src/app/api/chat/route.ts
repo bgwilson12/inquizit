@@ -3,7 +3,8 @@ import { z } from "zod";
 
 const client = new OpenAI();
 
-const generatedQuiz = z.object({
+// Define a simplified schema for OpenAI (without relations, IDs, dates)
+const openAIQuizSchema = z.object({
 	quizName: z.string(),
 	questions: z.array(
 		z.object({
@@ -14,32 +15,10 @@ const generatedQuiz = z.object({
 	),
 });
 
-export type QuizInput = z.infer<typeof generatedQuiz>;
+export type QuizInput = z.infer<typeof openAIQuizSchema>;
 
-const quizJsonSchema = {
-	type: "object",
-	properties: {
-		quizName: { type: "string" },
-		questions: {
-			type: "array",
-			items: {
-				type: "object",
-				properties: {
-					text: { type: "string" },
-					answers: {
-						type: "array",
-						items: { type: "string" },
-					},
-					correctAnswer: { type: "string" },
-				},
-				required: ["text", "answers", "correctAnswer"],
-				additionalProperties: false,
-			},
-		},
-	},
-	required: ["quizName", "questions"],
-	additionalProperties: false,
-};
+// Convert to JSON Schema using Zod 4's native function
+const quizJsonSchema = z.toJSONSchema(openAIQuizSchema, { target: "draft-7" });
 
 export async function POST(request: Request) {
 	const body = await request.json();
@@ -68,17 +47,10 @@ export async function POST(request: Request) {
 		},
 	});
 
-	console.log("response.output_text");
-	console.log(response.output_text);
-	const parsed = generatedQuiz.parse(JSON.parse(response.output_text));
+	const parsed = openAIQuizSchema.parse(JSON.parse(response.output_text));
 	return Response.json(parsed);
 }
 
 export async function GET() {
-	// const response = await client.responses.create({
-	// 	model: "gpt-5",
-	// 	input: "Write a one sentence story about a cat named mojo",
-	// });
-	// return Response.json(response);
 	return "GET called";
 }

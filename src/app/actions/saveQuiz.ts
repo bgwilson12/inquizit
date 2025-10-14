@@ -7,7 +7,12 @@ export async function saveQuiz(quiz: QuizInput) {
 	return prisma.quiz.create({
 		data: {
 			quizName: quiz.quizName,
-			questions: quiz.questions,
+			questions: {
+				create: quiz.questions,
+			},
+		},
+		include: {
+			questions: true,
 		},
 	});
 }
