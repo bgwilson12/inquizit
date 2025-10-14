@@ -10,7 +10,6 @@ export default function QuizList({ data }: { data: QuizData }) {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	function toggleModalOpen() {
 		setIsModalOpen(!isModalOpen);
-		console.log(isModalOpen);
 	}
 	return (
 		<div className="flex">

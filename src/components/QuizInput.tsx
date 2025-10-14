@@ -7,12 +7,10 @@ import { createQuiz } from "@/lib/openAiClientApi";
 
 export default function QuizInput() {
 	const [userPrompt, setUserPrompt] = useState(
-		"make a one sentence story about a cat named mojo",
+		"make a one question quiz about a cat named mojo",
 	);
-	const [llmOutput, setLlmOutput] = useState("");
 	async function handleClick() {
-		const output = await createQuiz(userPrompt);
-		setLlmOutput(output);
+		await createQuiz(userPrompt);
 	}
 	return (
 		<div>
@@ -24,7 +22,6 @@ export default function QuizInput() {
 			<Button type="button" variant="outline" onClick={handleClick}>
 				Create Quiz
 			</Button>
-			<p>{llmOutput}</p>
 		</div>
 	);
 }
