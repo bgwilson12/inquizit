@@ -1,15 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-	provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
+
 generator zod {
   provider = "zod-prisma-types"
-	output 	 = "../src/zod"
+  output   = "../src/zod"
 }
 
 datasource db {
@@ -18,20 +13,11 @@ datasource db {
 }
 
 model Quiz {
-    id        String     @id @default(uuid())
-    quizName  String
-    questions Question[]
-    createdAt DateTime   @default(now())
-    updatedAt DateTime   @updatedAt
-		@@map("quiz")
-}
+  id        String   @id @default(uuid())
+  quizName  String
+  questions Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-model Question {
-	id						String		@id @default(uuid())
-	quizId				String
-	text					String
-	answers				String[]
-	correctAnswer String
-	quiz					Quiz		@relation(fields: [quizId], references: [id])
-	@@map("question")
+  @@map("quiz")
 }
