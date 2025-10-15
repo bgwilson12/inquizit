@@ -5,6 +5,18 @@ import type { QuizInput } from "@/lib/types";
 
 export async function saveQuiz(quiz: QuizInput) {
 	return prisma.quiz.create({
-		data: quiz,
+		data: {
+			quizName: quiz.quizName,
+			questions: {
+				create: quiz.questions.map((q) => ({
+					text: q.text,
+					answers: q.answers,
+					correctAnswer: q.correctAnswer,
+				})),
+			},
+		},
+		include: {
+			questions: true,
+		},
 	});
 }

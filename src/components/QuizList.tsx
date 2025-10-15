@@ -2,28 +2,33 @@
 
 import { useState } from "react";
 import QuizCard from "./QuizCard";
-import Modal from "./Modal";
+import Modal from "./QuizModal";
+import { Quiz, Question } from "@prisma/client";
 
-type QuizData = { id: string; quizName: string }[];
+export type QuizData = (Quiz & { questions: Question[] })[];
 
 export default function QuizList({ data }: { data: QuizData }) {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-	function toggleModalOpen() {
+	const [selectedQuizId, setSelectedQuizId] = useState<string>("");
+	function onOpenModal(quizId: string) {
+		setSelectedQuizId(quizId);
 		setIsModalOpen(!isModalOpen);
 	}
+	function onCloseModal() {
+		setIsModalOpen(!isModalOpen);
+		setSelectedQuizId("");
+	}
 	return (
-		<div className="flex">
+		<div className="flex flex-wrap">
 			{data.map((item) => {
-				return (
-					<QuizCard
-						key={item.id}
-						item={item}
-						toggleModalOpen={toggleModalOpen}
-					/>
-				);
+				return <QuizCard key={item.id} item={item} handleClick={onOpenModal} />;
 			})}
 
-			<Modal isOpen={isModalOpen} onOpenChange={toggleModalOpen} />
+			<Modal
+				quizId={selectedQuizId}
+				isOpen={isModalOpen}
+				onOpenChange={onCloseModal}
+			/>
 		</div>
 	);
 }

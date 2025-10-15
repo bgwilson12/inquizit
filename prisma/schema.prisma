@@ -8,11 +8,22 @@ datasource db {
 }
 
 model Quiz {
-  id        String   @id @default(uuid())
+  id        String     @id @default(uuid())
   quizName  String
-  questions Json
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  questions Question[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
   @@map("quiz")
+}
+
+model Question {
+  id            String @id @default(uuid())
+  text          String
+  answers       String[]
+  correctAnswer String
+  quizId        String
+  quiz          Quiz   @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@map("question")
 }

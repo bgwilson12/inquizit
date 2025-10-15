@@ -3,8 +3,6 @@ import QuizList from "@/components/QuizList";
 import { getQuizzes } from "./actions/getQuizzes";
 const initialData = await getQuizzes();
 
-export type QuizData = { id: string; name: string }[];
-
 export default function Home() {
 	return (
 		<div className="w-3xl border-2">
@@ -17,7 +15,7 @@ export default function Home() {
 			</main>
 
 			<footer>
-				<p>&copy; 2025 Example Company</p>
+				<p>&copy; bretson</p>
 			</footer>
 		</div>
 	);

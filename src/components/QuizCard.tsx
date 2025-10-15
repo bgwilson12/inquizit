@@ -1,17 +1,18 @@
 "use client";
 import { Settings } from "lucide-react";
+import { QuizData } from "./QuizList";
 
 export default function QuizCard({
 	item,
-	toggleModalOpen,
+	handleClick,
 }: {
-	item: { id: string; quizName: string };
-	toggleModalOpen: () => void;
+	item: QuizData[0];
+	handleClick: (id: string) => void;
 }) {
 	return (
 		<div
-			className="h-56 w-56 p-2 m-2 shadow-lg rounded-xl bg-slate-500 cursor-pointer"
-			onClick={toggleModalOpen}
+			className="shrink-0 h-56 w-56 p-2 m-2 shadow-lg rounded-xl bg-slate-500 cursor-pointer"
+			onClick={() => handleClick(item.id)}
 		>
 			<div>{item.quizName}</div>
 			<div className="flex justify-between ">
